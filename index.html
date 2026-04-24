@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LACHIN GULUYEV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --black:#0a0a0a;
+    --white:#f8f6f2;
+    --accent:#c8b89a;
+    --muted:#8a7f72;
+    --nav-h:64px;
+    --serif:'Cormorant Garamond',Georgia,serif;
+    --sans:'Montserrat',sans-serif;
+  }
+  html{scroll-behavior:smooth}
+  body{background:var(--black);color:var(--white);font-family:var(--sans);font-weight:300;overflow-x:hidden}
+
+  /* NAV */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    height:var(--nav-h);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 48px;
+    background:rgba(10,10,10,0.92);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(200,184,154,0.15);
+  }
+  .nav-logo{
+    font-family:var(--serif);font-size:18px;font-weight:400;
+    letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--white);text-decoration:none;
+    display:flex;align-items:center;gap:12px;
+  }
+  .nav-logo img{height:28px;filter:invert(1)}
+  .nav-links{display:flex;gap:36px;list-style:none}
+  .nav-links a{
+    font-size:10.5px;letter-spacing:0.2em;text-transform:uppercase;
+    color:rgba(248,246,242,0.6);text-decoration:none;
+    transition:color 0.25s;font-weight:400;
+  }
+  .nav-links a:hover,.nav-links a.active{color:var(--white)}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+  .hamburger span{display:block;width:22px;height:1px;background:var(--white);transition:all 0.3s}
+
+  /* HERO */
+  #home{
+    height:100vh;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    position:relative;overflow:hidden;
+    text-align:center;padding:0 24px;
+  }
+  .hero-bg{
+    position:absolute;inset:0;
+    overflow:hidden;
+  }
+  .hero-bg img.hero-photo{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    object-fit:cover;
+    opacity:0.55;
+  }
+  .hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,10,10,0.3) 0%,rgba(10,10,10,0.7) 100%)}
+  .hero-content{position:relative;z-index:1}
+  .hero-eyebrow{
+    font-size:10px;letter-spacing:0.35em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:24px;font-weight:400;
+  }
+  .hero-title{
+    font-family:var(--serif);font-size:clamp(52px,8vw,100px);
+    font-weight:300;letter-spacing:0.06em;line-height:1.05;
+    margin-bottom:28px;
+  }
+  .hero-sub{
+    font-size:11px;letter-spacing:0.25em;text-transform:uppercase;
+    color:rgba(248,246,242,0.55);max-width:420px;margin:0 auto 48px;
+    line-height:2;font-weight:300;
+  }
+  .hero-cta{
+    display:inline-flex;align-items:center;gap:12px;
+    font-size:10px;letter-spacing:0.25em;text-transform:uppercase;
+    color:var(--white);text-decoration:none;font-weight:400;
+    border-bottom:1px solid rgba(200,184,154,0.5);padding-bottom:6px;
+    transition:border-color 0.3s;
+  }
+  .hero-cta:hover{border-color:var(--accent)}
+
+  /* SECTIONS */
+  section{padding:120px 0}
+  .section-inner{max-width:1320px;margin:0 auto;padding:0 48px}
+  .section-label{
+    font-size:10px;letter-spacing:0.35em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:16px;display:block;
+  }
+  .section-title{
+    font-family:var(--serif);font-size:clamp(36px,5vw,60px);
+    font-weight:300;line-height:1.1;margin-bottom:64px;
+  }
+
+  /* WORKS TABS */
+  .works-tabs{
+    display:flex;gap:0;margin-bottom:48px;
+    border-bottom:1px solid rgba(200,184,154,0.15);
+  }
+  .works-tab{
+    background:none;border:none;cursor:pointer;
+    font-family:var(--sans);font-size:10.5px;font-weight:400;
+    letter-spacing:0.22em;text-transform:uppercase;
+    color:rgba(248,246,242,0.4);
+    padding:14px 28px 14px 0;
+    position:relative;transition:color 0.25s;
+  }
+  .works-tab::after{
+    content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;
+    background:var(--accent);transform:scaleX(0);transition:transform 0.3s;
+    transform-origin:left;
+  }
+  .works-tab:hover{color:rgba(248,246,242,0.7)}
+  .works-tab.active{color:var(--white)}
+  .works-tab.active::after{transform:scaleX(1)}
+
+  .works-category{display:none}
+  .works-category.active{display:block}
+
+  /* WORKS GRID */
+  .works-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:2px;
+  }
+  .work-item{
+    position:relative;overflow:hidden;
+    aspect-ratio:4/3;cursor:pointer;
+  }
+  .work-item.wide{grid-column:span 2}
+  .work-item.tall{grid-row:span 2}
+  .work-item img,.work-item iframe,.work-item video{
+    width:100%;height:100%;object-fit:cover;
+    transition:transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+    display:block;
+  }
+  .work-item:hover img,.work-item:hover video{transform:scale(1.04)}
+  .work-overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(to top,rgba(10,10,10,0.8) 0%,transparent 55%);
+    opacity:0;transition:opacity 0.35s;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    padding:28px;
+  }
+  .work-item:hover .work-overlay{opacity:1}
+  .work-title{font-family:var(--serif);font-size:18px;font-weight:400;margin-bottom:6px}
+  .work-sub{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent)}
+  .work-type-badge{
+    position:absolute;top:16px;right:16px;
+    font-size:9px;letter-spacing:0.2em;text-transform:uppercase;
+    background:rgba(10,10,10,0.75);border:1px solid rgba(200,184,154,0.4);
+    color:var(--accent);padding:5px 10px;
+  }
+  .work-video-embed{
+    position:relative;width:100%;padding-bottom:75%;overflow:hidden;
+  }
+  .work-video-embed iframe{
+    position:absolute;top:0;left:0;width:100%;height:100%;border:none;
+  }
+  .media-placeholder{
+    width:100%;height:100%;background:#1a1a1a;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+    color:var(--muted);
+  }
+  .media-placeholder .icon{font-size:28px;opacity:0.5}
+  .media-placeholder p{font-size:11px;letter-spacing:0.15em;text-transform:uppercase}
+
+  /* REALTIME APP */
+  #realtime{background:#0d0d0d}
+  .apps-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px}
+  .app-item{
+    position:relative;overflow:hidden;
+    aspect-ratio:16/10;cursor:pointer;
+  }
+  .app-item.full{grid-column:span 2;aspect-ratio:21/9}
+  .app-item img,.app-item video{
+    width:100%;height:100%;object-fit:cover;
+    transition:transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .app-item:hover img,.app-item:hover video{transform:scale(1.04)}
+  .app-overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(135deg,rgba(10,10,10,0.85) 0%,transparent 60%);
+    display:flex;flex-direction:column;justify-content:flex-start;
+    padding:32px;opacity:0;transition:opacity 0.35s;
+  }
+  .app-item:hover .app-overlay{opacity:1}
+  .app-label{
+    font-size:10px;letter-spacing:0.28em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:10px;
+  }
+  .app-name{font-family:var(--serif);font-size:24px;font-weight:300}
+
+  /* 360 TOURS */
+  #tours{background:#111}
+  .tours-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:32px}
+  .tour-card{
+    background:#1a1a1a;border:1px solid rgba(200,184,154,0.12);
+    overflow:hidden;
+  }
+  .tour-embed{
+    position:relative;width:100%;padding-bottom:56.25%;overflow:hidden;
+  }
+  .tour-embed iframe{
+    position:absolute;top:0;left:0;width:100%;height:100%;border:none;
+  }
+  .tour-placeholder{
+    width:100%;padding-bottom:56.25%;background:#161616;position:relative;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .tour-placeholder-inner{
+    position:absolute;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:14px;
+  }
+  .tour-icon{
+    width:56px;height:56px;border:1px solid rgba(200,184,154,0.3);
+    border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:22px;color:var(--accent);
+  }
+  .tour-info{padding:24px 28px}
+  .tour-info h3{font-family:var(--serif);font-size:20px;font-weight:400;margin-bottom:8px}
+  .tour-info p{font-size:11px;color:var(--muted);letter-spacing:0.1em;line-height:1.8}
+  .tour-link{
+    display:inline-flex;align-items:center;gap:8px;margin-top:16px;
+    font-size:10px;letter-spacing:0.2em;text-transform:uppercase;
+    color:var(--accent);text-decoration:none;
+    border-bottom:1px solid rgba(200,184,154,0.3);padding-bottom:4px;
+    transition:border-color 0.25s;
+  }
+  .tour-link:hover{border-color:var(--accent)}
+
+  /* ABOUT */
+  #about{background:var(--black)}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:start}
+  .about-image{position:relative}
+  .about-image img{width:100%;aspect-ratio:3/4;object-fit:cover}
+  .about-image::after{
+    content:'';position:absolute;
+    bottom:-16px;right:-16px;
+    width:60%;height:60%;
+    border:1px solid rgba(200,184,154,0.25);
+    pointer-events:none;
+  }
+  .about-text{}
+  .about-text h2{font-family:var(--serif);font-size:clamp(32px,4vw,48px);font-weight:300;line-height:1.15;margin-bottom:32px}
+  .about-text p{
+    font-size:13px;line-height:2;color:rgba(248,246,242,0.65);
+    margin-bottom:20px;
+  }
+  .about-stats{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:32px;
+    margin-top:48px;padding-top:48px;
+    border-top:1px solid rgba(200,184,154,0.2);
+  }
+  .stat-num{
+    font-family:var(--serif);font-size:40px;font-weight:300;
+    color:var(--accent);line-height:1;margin-bottom:8px;
+  }
+  .stat-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted)}
+
+  /* CONTACT */
+  #contact{background:#0d0d0d}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+  .contact-intro h2{font-family:var(--serif);font-size:clamp(30px,4vw,52px);font-weight:300;line-height:1.2;margin-bottom:24px}
+  .contact-intro p{font-size:13px;line-height:2;color:rgba(248,246,242,0.55);margin-bottom:40px}
+  .contact-links{display:flex;flex-direction:column;gap:20px}
+  .contact-link-item{
+    display:flex;align-items:center;gap:16px;
+    text-decoration:none;color:var(--white);
+    padding:20px 24px;border:1px solid rgba(200,184,154,0.15);
+    transition:border-color 0.3s,background 0.3s;
+  }
+  .contact-link-item:hover{border-color:var(--accent);background:rgba(200,184,154,0.04)}
+  .contact-link-icon{font-size:18px;color:var(--accent);width:24px;text-align:center}
+  .contact-link-text{}
+  .contact-link-label{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+  .contact-link-value{font-size:14px;font-weight:300}
+
+  .contact-form-side{}
+  .form-group{margin-bottom:24px}
+  .form-group label{display:block;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .form-group input,
+  .form-group textarea{
+    width:100%;background:transparent;
+    border:none;border-bottom:1px solid rgba(200,184,154,0.25);
+    color:var(--white);font-family:var(--sans);font-size:14px;font-weight:300;
+    padding:10px 0;outline:none;
+    transition:border-color 0.3s;
+    resize:none;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus{border-color:var(--accent)}
+  .form-group textarea{height:100px}
+  .submit-btn{
+    display:inline-flex;align-items:center;gap:14px;
+    background:transparent;border:1px solid rgba(200,184,154,0.4);
+    color:var(--white);font-family:var(--sans);font-size:10px;
+    letter-spacing:0.25em;text-transform:uppercase;font-weight:400;
+    padding:16px 36px;cursor:pointer;
+    transition:background 0.3s,border-color 0.3s;
+    margin-top:8px;
+  }
+  .submit-btn:hover{background:rgba(200,184,154,0.08);border-color:var(--accent)}
+
+  /* FOOTER */
+  footer{
+    padding:48px;
+    border-top:1px solid rgba(200,184,154,0.12);
+    display:flex;justify-content:space-between;align-items:center;
+    flex-wrap:wrap;gap:20px;
+  }
+  .footer-logo{font-family:var(--serif);font-size:15px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(248,246,242,0.4)}
+  .footer-copy{font-size:10px;letter-spacing:0.15em;color:rgba(248,246,242,0.3)}
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar{width:4px}
+  ::-webkit-scrollbar-track{background:#0a0a0a}
+  ::-webkit-scrollbar-thumb{background:rgba(200,184,154,0.3)}
+
+  /* RESPONSIVE */
+  @media(max-width:1024px){
+    .works-grid{grid-template-columns:repeat(2,1fr)}
+    .work-item.wide{grid-column:span 1}
+    .about-grid,.contact-grid{grid-template-columns:1fr;gap:48px}
+    .about-image::after{display:none}
+  }
+  @media(max-width:768px){
+    nav{padding:0 24px}
+    .nav-links{display:none;position:fixed;top:var(--nav-h);left:0;right:0;
+      background:rgba(10,10,10,0.97);flex-direction:column;gap:0;
+      border-top:1px solid rgba(200,184,154,0.1);}
+    .nav-links.open{display:flex}
+    .nav-links li a{display:block;padding:18px 32px;border-bottom:1px solid rgba(200,184,154,0.08)}
+    .hamburger{display:flex}
+    .section-inner{padding:0 24px}
+    .works-grid,.apps-grid,.tours-grid{grid-template-columns:1fr}
+    .app-item.full{grid-column:span 1;aspect-ratio:16/10}
+    .about-stats{grid-template-columns:repeat(3,1fr)}
+    footer{padding:32px 24px}
+  }
+
+  /* FADE IN ANIMATION */
+  .fade-in{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease}
+  .fade-in.visible{opacity:1;transform:translateY(0)}
+
+  /* LIGHTBOX */
+  .lightbox{
+    position:fixed;inset:0;z-index:999;
+    background:rgba(0,0,0,0);
+    display:flex;align-items:center;justify-content:center;
+    cursor:zoom-out;
+    transition:background 0.35s ease;
+    pointer-events:none;
+    visibility:hidden;
+  }
+  .lightbox.open{
+    background:rgba(0,0,0,0.92);
+    pointer-events:all;
+    visibility:visible;
+  }
+  .lightbox-img{
+    max-width:92vw;max-height:92vh;
+    object-fit:contain;
+    border-radius:2px;
+    transform:scale(0.85);opacity:0;
+    transition:transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.35s ease;
+    cursor:default;
+    box-shadow:0 32px 80px rgba(0,0,0,0.6);
+  }
+  .lightbox.open .lightbox-img{
+    transform:scale(1);opacity:1;
+  }
+  .lightbox-close{
+    position:fixed;top:24px;right:32px;
+    font-size:28px;color:rgba(248,246,242,0.7);
+    cursor:pointer;line-height:1;
+    transition:color 0.2s,transform 0.2s;
+    z-index:1000;
+    background:none;border:none;
+    font-family:var(--sans);font-weight:200;
+  }
+  .lightbox-close:hover{color:var(--white);transform:rotate(90deg);}
+  .lightbox-nav{
+    position:fixed;top:50%;transform:translateY(-50%);
+    background:rgba(248,246,242,0.08);border:1px solid rgba(248,246,242,0.15);
+    color:rgba(248,246,242,0.7);font-size:20px;
+    width:48px;height:48px;display:flex;align-items:center;justify-content:center;
+    cursor:pointer;transition:all 0.2s;z-index:1000;
+    user-select:none;
+  }
+  .lightbox-nav:hover{background:rgba(248,246,242,0.15);color:var(--white);}
+  .lightbox-prev{left:24px;}
+  .lightbox-next{right:24px;}
+  .lightbox-counter{
+    position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
+    font-size:10px;letter-spacing:0.25em;text-transform:uppercase;
+    color:rgba(248,246,242,0.45);
+  }
+  .work-item{cursor:zoom-in;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nav-logo" href="#home">
+    LACHIN GULUYEV
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#works" class="active">Works</a></li>
+    <li><a href="#realtime">Real-Time App</a></li>
+    <li><a href="#tours">360 Tours</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home" style="padding:0">
+  <div class="hero-bg">
+    <img class="hero-photo" src="assets/images/hero_bg.webp" alt="Lachin Guluyev">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Architectural Visualization &amp; 3D Rendering</p>
+    <h1 class="hero-title">LACHIN<br>GULUYEV</h1>
+    <p class="hero-sub">Crafting architectural visions through<br>precision, light &amp; spatial narrative</p>
+    <a class="hero-cta" href="#works">Explore Works <span>→</span></a>
+  </div>
+</section>
+
+<!-- WORKS -->
+<section id="works">
+  <div class="section-inner">
+    <span class="section-label fade-in">Portfolio</span>
+    <h2 class="section-title fade-in">Works</h2>
+
+    <!-- TABS -->
+    <div class="works-tabs fade-in">
+      <button class="works-tab active" onclick="switchTab('all',this)">All</button>
+      <button class="works-tab" onclick="switchTab('interiors',this)">Interiors</button>
+      <button class="works-tab" onclick="switchTab('facade',this)">Facade</button>
+      <button class="works-tab" onclick="switchTab('products',this)">Products</button>
+    </div>
+
+    <!-- ALL -->
+    <div class="works-category active" id="cat-all">
+      <div class="works-grid">
+        <div class="work-item fade-in">
+          <img src="assets/images/img_000.webp" alt="Sea Breeze Riviera" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Sea Breeze Riviera</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_001.webp" alt="Sea Breeze Villa Interior" loading="lazy">
+          <span class="work-type-badge">Interiors</span>
+          <div class="work-overlay">
+            <p class="work-title">Sea Breeze Villa Interior</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_002.webp" alt="Hyundai Santa Fe" loading="lazy">
+          <span class="work-type-badge">Products</span>
+          <div class="work-overlay">
+            <p class="work-title">Hyundai Santa Fe</p>
+            <p class="work-sub">3D Render</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_003.webp" alt="Port Baku" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Port Baku</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_004.webp" alt="Knightbridge" loading="lazy">
+          <span class="work-type-badge">Interiors</span>
+          <div class="work-overlay">
+            <p class="work-title">Knightbridge</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_005.webp" alt="Hyundai Santa Fe II" loading="lazy">
+          <span class="work-type-badge">Products</span>
+          <div class="work-overlay">
+            <p class="work-title">Hyundai Santa Fe II</p>
+            <p class="work-sub">3D Render</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_006.webp" alt="Badamdar House" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Badamdar House</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_007.webp" alt="Villa Interior Shuvalan" loading="lazy">
+          <span class="work-type-badge">Interiors</span>
+          <div class="work-overlay">
+            <p class="work-title">Villa Interior Shuvalan</p>
+            <p class="work-sub">Shuvalan, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_008.webp" alt="Hyundai Santa Fe III" loading="lazy">
+          <span class="work-type-badge">Products</span>
+          <div class="work-overlay">
+            <p class="work-title">Hyundai Santa Fe III</p>
+            <p class="work-sub">3D Render</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_009.webp" alt="Sea Breeze House" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Sea Breeze House</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_010.webp" alt="Fatmayi Villa" loading="lazy">
+          <span class="work-type-badge">Interiors</span>
+          <div class="work-overlay">
+            <p class="work-title">Fatmayi Villa</p>
+            <p class="work-sub">Fatmayi, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_011.webp" alt="Bathroom Design" loading="lazy">
+          <span class="work-type-badge">Products</span>
+          <div class="work-overlay">
+            <p class="work-title">Bathroom Design</p>
+            <p class="work-sub">Interior Design</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_012.webp" alt="Mardakan" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Mardakan</p>
+            <p class="work-sub">Mardakan, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_013.webp" alt="Dream Land" loading="lazy">
+          <span class="work-type-badge">Interiors</span>
+          <div class="work-overlay">
+            <p class="work-title">Dream Land</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_014.webp" alt="Close Up" loading="lazy">
+          <span class="work-type-badge">Products</span>
+          <div class="work-overlay">
+            <p class="work-title">Close Up</p>
+            <p class="work-sub">Product Render</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_015.webp" alt="Chicago Farnsworth" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Chicago Farnsworth</p>
+            <p class="work-sub">Chicago, USA</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_016.webp" alt="Kitchen Interior" loading="lazy">
+          <span class="work-type-badge">Interiors</span>
+          <div class="work-overlay">
+            <p class="work-title">Kitchen Interior</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_017.webp" alt="Hyundai Santa Fe IV" loading="lazy">
+          <span class="work-type-badge">Products</span>
+          <div class="work-overlay">
+            <p class="work-title">Hyundai Santa Fe IV</p>
+            <p class="work-sub">3D Render</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_018.webp" alt="California Family Residence" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">California Family Residence</p>
+            <p class="work-sub">California, USA</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_019.webp" alt="Sumgayit Apartment" loading="lazy">
+          <span class="work-type-badge">Interiors</span>
+          <div class="work-overlay">
+            <p class="work-title">Sumgayit Apartment</p>
+            <p class="work-sub">Sumgayit, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_013.webp" alt="Dream Land" loading="lazy">
+          <span class="work-type-badge">Products</span>
+          <div class="work-overlay">
+            <p class="work-title">Dream Land</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_021.webp" alt="Germany Munich" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Germany Munich</p>
+            <p class="work-sub">Munich, Germany</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_022.webp" alt="White City Interior" loading="lazy">
+          <span class="work-type-badge">Interiors</span>
+          <div class="work-overlay">
+            <p class="work-title">White City Interior</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_023.webp" alt="Sea Breeze Riviera II" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Sea Breeze Riviera II</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_024.webp" alt="Fatmayi Villa II" loading="lazy">
+          <span class="work-type-badge">Interiors</span>
+          <div class="work-overlay">
+            <p class="work-title">Fatmayi Villa II</p>
+            <p class="work-sub">Fatmayi, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_025.webp" alt="Sea Breeze Riviera III" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Sea Breeze Riviera III</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_026.webp" alt="Sea Breeze Villa Interior II" loading="lazy">
+          <span class="work-type-badge">Interiors</span>
+          <div class="work-overlay">
+            <p class="work-title">Sea Breeze Villa Interior II</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_027.webp" alt="Nurnberg" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Nurnberg</p>
+            <p class="work-sub">Nürnberg, Germany</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_028.webp" alt="Sea Breeze Villa Interior III" loading="lazy">
+          <span class="work-type-badge">Interiors</span>
+          <div class="work-overlay">
+            <p class="work-title">Sea Breeze Villa Interior III</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_029.webp" alt="Spain House — Family Residential" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Spain House — Family Residential</p>
+            <p class="work-sub">Spain</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_030.webp" alt="Dream Land II" loading="lazy">
+          <span class="work-type-badge">Interiors</span>
+          <div class="work-overlay">
+            <p class="work-title">Dream Land II</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_031.webp" alt="Sweden House — Family" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Sweden House — Family</p>
+            <p class="work-sub">Sweden</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_032.webp" alt="Mardakan II" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Mardakan II</p>
+            <p class="work-sub">Mardakan, Azerbaijan</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    </div>
+    </div>
+
+    <!-- INTERIORS -->
+    <div class="works-category" id="cat-interiors">
+      <div class="works-grid">
+        <div class="work-item fade-in">
+          <img src="assets/images/img_001.webp" alt="Sea Breeze Villa Interior" loading="lazy">
+          <span class="work-type-badge">Interiors</span>
+          <div class="work-overlay">
+            <p class="work-title">Sea Breeze Villa Interior</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_026.webp" alt="Sea Breeze Villa Interior II" loading="lazy">
+          <span class="work-type-badge">Interiors</span>
+          <div class="work-overlay">
+            <p class="work-title">Sea Breeze Villa Interior II</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_028.webp" alt="Sea Breeze Villa Interior III" loading="lazy">
+          <span class="work-type-badge">Interiors</span>
+          <div class="work-overlay">
+            <p class="work-title">Sea Breeze Villa Interior III</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_004.webp" alt="Knightbridge" loading="lazy">
+          <span class="work-type-badge">Interiors</span>
+          <div class="work-overlay">
+            <p class="work-title">Knightbridge</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_007.webp" alt="Villa Interior Shuvalan" loading="lazy">
+          <span class="work-type-badge">Interiors</span>
+          <div class="work-overlay">
+            <p class="work-title">Villa Interior Shuvalan</p>
+            <p class="work-sub">Shuvalan, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_010.webp" alt="Fatmayi Villa" loading="lazy">
+          <span class="work-type-badge">Interiors</span>
+          <div class="work-overlay">
+            <p class="work-title">Fatmayi Villa</p>
+            <p class="work-sub">Fatmayi, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_024.webp" alt="Fatmayi Villa II" loading="lazy">
+          <span class="work-type-badge">Interiors</span>
+          <div class="work-overlay">
+            <p class="work-title">Fatmayi Villa II</p>
+            <p class="work-sub">Fatmayi, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_013.webp" alt="Dream Land" loading="lazy">
+          <span class="work-type-badge">Interiors</span>
+          <div class="work-overlay">
+            <p class="work-title">Dream Land</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_030.webp" alt="Dream Land II" loading="lazy">
+          <span class="work-type-badge">Interiors</span>
+          <div class="work-overlay">
+            <p class="work-title">Dream Land II</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_016.webp" alt="Kitchen Interior" loading="lazy">
+          <span class="work-type-badge">Interiors</span>
+          <div class="work-overlay">
+            <p class="work-title">Kitchen Interior</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_019.webp" alt="Sumgayit Apartment" loading="lazy">
+          <span class="work-type-badge">Interiors</span>
+          <div class="work-overlay">
+            <p class="work-title">Sumgayit Apartment</p>
+            <p class="work-sub">Sumgayit, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_022.webp" alt="White City Interior" loading="lazy">
+          <span class="work-type-badge">Interiors</span>
+          <div class="work-overlay">
+            <p class="work-title">White City Interior</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    </div>
+    </div>
+
+    <!-- FACADE -->
+    <div class="works-category" id="cat-facade">
+      <div class="works-grid">
+        <div class="work-item fade-in">
+          <img src="assets/images/img_000.webp" alt="Sea Breeze Riviera" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Sea Breeze Riviera</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_023.webp" alt="Sea Breeze Riviera II" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Sea Breeze Riviera II</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_025.webp" alt="Sea Breeze Riviera III" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Sea Breeze Riviera III</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_003.webp" alt="Port Baku" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Port Baku</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_009.webp" alt="Sea Breeze House" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Sea Breeze House</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_006.webp" alt="Badamdar House" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Badamdar House</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_012.webp" alt="Mardakan" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Mardakan</p>
+            <p class="work-sub">Mardakan, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_032.webp" alt="Mardakan II" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Mardakan II</p>
+            <p class="work-sub">Mardakan, Azerbaijan</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_015.webp" alt="Chicago Farnsworth" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Chicago Farnsworth</p>
+            <p class="work-sub">Chicago, USA</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_018.webp" alt="California Family Residence" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">California Family Residence</p>
+            <p class="work-sub">California, USA</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_021.webp" alt="Germany Munich" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Germany Munich</p>
+            <p class="work-sub">Munich, Germany</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_027.webp" alt="Nurnberg" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Nurnberg</p>
+            <p class="work-sub">Nürnberg, Germany</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_029.webp" alt="Spain House — Family Residential" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Spain House — Family Residential</p>
+            <p class="work-sub">Spain</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_031.webp" alt="Sweden House — Family" loading="lazy">
+          <span class="work-type-badge">Facade</span>
+          <div class="work-overlay">
+            <p class="work-title">Sweden House — Family</p>
+            <p class="work-sub">Sweden</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    </div>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div class="works-category" id="cat-products">
+      <div class="works-grid">
+        <div class="work-item fade-in">
+          <img src="assets/images/img_002.webp" alt="Hyundai Santa Fe" loading="lazy">
+          <span class="work-type-badge">Products</span>
+          <div class="work-overlay">
+            <p class="work-title">Hyundai Santa Fe</p>
+            <p class="work-sub">3D Render</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_005.webp" alt="Hyundai Santa Fe II" loading="lazy">
+          <span class="work-type-badge">Products</span>
+          <div class="work-overlay">
+            <p class="work-title">Hyundai Santa Fe II</p>
+            <p class="work-sub">3D Render</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_008.webp" alt="Hyundai Santa Fe III" loading="lazy">
+          <span class="work-type-badge">Products</span>
+          <div class="work-overlay">
+            <p class="work-title">Hyundai Santa Fe III</p>
+            <p class="work-sub">3D Render</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_017.webp" alt="Hyundai Santa Fe IV" loading="lazy">
+          <span class="work-type-badge">Products</span>
+          <div class="work-overlay">
+            <p class="work-title">Hyundai Santa Fe IV</p>
+            <p class="work-sub">3D Render</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_011.webp" alt="Bathroom Design" loading="lazy">
+          <span class="work-type-badge">Products</span>
+          <div class="work-overlay">
+            <p class="work-title">Bathroom Design</p>
+            <p class="work-sub">Interior Design</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_014.webp" alt="Close Up" loading="lazy">
+          <span class="work-type-badge">Products</span>
+          <div class="work-overlay">
+            <p class="work-title">Close Up</p>
+            <p class="work-sub">Product Render</p>
+          </div>
+        </div>
+        <div class="work-item fade-in">
+          <img src="assets/images/img_013.webp" alt="Dream Land" loading="lazy">
+          <span class="work-type-badge">Products</span>
+          <div class="work-overlay">
+            <p class="work-title">Dream Land</p>
+            <p class="work-sub">Baku, Azerbaijan</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- REAL-TIME APP -->
+<section id="realtime">
+  <div class="section-inner">
+    <span class="section-label fade-in">Case Studies</span>
+    <h2 class="section-title fade-in">Real-Time App</h2>
+
+    <div class="apps-grid">
+
+      <!-- Full-width video embed -->
+      <div class="app-item full fade-in" style="aspect-ratio:unset">
+        <div class="work-video-embed" style="padding-bottom:42%">
+          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=1&modestbranding=1&rel=0" title="Real-Time Render App Showcase" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <span class="work-type-badge">Video</span>
+        <div class="app-overlay">
+          <p class="app-label">Featured</p>
+          <p class="app-name">Real-Time Visualization Engine</p>
+        </div>
+      </div>
+
+      <!-- Image -->
+      <div class="app-item fade-in">
+        <img src="https://images.squarespace-cdn.com/content/v1/65bbf74388684f64d2999988/a5febaf5-092d-459f-9908-42555aa74055/Bobak_Studio%2BVessel_Office_The_Black_Forest_House_pov-2.jpg" alt="Black Forest House" loading="lazy">
+        <span class="work-type-badge">Image</span>
+        <div class="app-overlay">
+          <p class="app-label">Case Study 01</p>
+          <p class="app-name">The Black Forest House</p>
+        </div>
+      </div>
+
+      <!-- Embed Video -->
+      <div class="app-item fade-in" style="aspect-ratio:unset">
+        <div class="work-video-embed" style="padding-bottom:56.25%">
+          <iframe src="https://player.vimeo.com/video/76979871?autoplay=0&title=0&byline=0&portrait=0" title="Interactive walkthrough" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <span class="work-type-badge">Video</span>
+        <div class="app-overlay">
+          <p class="app-label">Case Study 02</p>
+          <p class="app-name">Interactive Walkthrough</p>
+        </div>
+      </div>
+
+      <!-- Image -->
+      <div class="app-item fade-in">
+        <img src="https://images.squarespace-cdn.com/content/v1/65bbf74388684f64d2999988/234e7d87-d546-4d67-a282-49b6a470b735/Bobak_Studio_JDA_Dover_Residence_pov-1.1.jpg" alt="Dover Residence" loading="lazy">
+        <span class="work-type-badge">Image</span>
+        <div class="app-overlay">
+          <p class="app-label">Case Study 03</p>
+          <p class="app-name">Dover Residence</p>
+        </div>
+      </div>
+
+      <!-- Image -->
+      <div class="app-item fade-in">
+        <img src="https://images.squarespace-cdn.com/content/v1/65bbf74388684f64d2999988/c4cee81b-9294-4b3d-9d2b-df0d61ad3eb3/Bobak_Studio_Kolarski_Germany_pov-1.jpg" alt="Kolarski Germany" loading="lazy">
+        <span class="work-type-badge">Image</span>
+        <div class="app-overlay">
+          <p class="app-label">Case Study 04</p>
+          <p class="app-name">Kolarski Residential</p>
+        </div>
+      </div>
+
+    </div><!-- /apps-grid -->
+  </div>
+</section>
+
+<!-- 360 TOURS -->
+<section id="tours">
+  <div class="section-inner">
+    <span class="section-label fade-in">Immersive Experience</span>
+    <h2 class="section-title fade-in">360 Tours</h2>
+    <div class="tours-grid">
+
+      <!-- Tour 1: Embed -->
+      <div class="tour-card fade-in">
+        <div class="tour-embed">
+          <iframe src="https://momento360.com/e/uc/b12d3c2d97a34b2cabd44e3a92b1a64a?utm_campaign=embed&utm_source=website&heading=0&pitch=0&field-of-view=75&size=medium&display-plan=true" title="360 Tour — Residential Interior" allowfullscreen></iframe>
+        </div>
+        <div class="tour-info">
+          <h3>Residential Interior Tour</h3>
+          <p>Fully immersive 360° walkthrough of a luxury residential project. Navigate every room at full resolution.</p>
+          <a href="#" class="tour-link">Open Full Tour →</a>
+        </div>
+      </div>
+
+      <!-- Tour 2: Placeholder (add embed link here) -->
+      <div class="tour-card fade-in">
+        <div class="tour-placeholder">
+          <div class="tour-placeholder-inner">
+            <div class="tour-icon">⟳</div>
+            <p style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted)">Add 360 Embed Link</p>
+          </div>
+        </div>
+        <div class="tour-info">
+          <h3>Commercial Space Tour</h3>
+          <p>Interactive 360° panorama of the lobby and public areas. Experience the architectural vision firsthand.</p>
+          <a href="#" class="tour-link">Open Full Tour →</a>
+        </div>
+      </div>
+
+      <!-- Tour 3: Placeholder -->
+      <div class="tour-card fade-in">
+        <div class="tour-placeholder">
+          <div class="tour-placeholder-inner">
+            <div class="tour-icon">⟳</div>
+            <p style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted)">Add 360 Embed Link</p>
+          </div>
+        </div>
+        <div class="tour-info">
+          <h3>Urban Exterior Tour</h3>
+          <p>A street-level 360° exploration of the building facade and surrounding urban context.</p>
+          <a href="#" class="tour-link">Open Full Tour →</a>
+        </div>
+      </div>
+
+      <!-- Tour 4: Placeholder -->
+      <div class="tour-card fade-in">
+        <div class="tour-placeholder">
+          <div class="tour-placeholder-inner">
+            <div class="tour-icon">⟳</div>
+            <p style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted)">Add 360 Embed Link</p>
+          </div>
+        </div>
+        <div class="tour-info">
+          <h3>Penthouse View Tour</h3>
+          <p>Step into the penthouse level and explore panoramic city views through an immersive 360° experience.</p>
+          <a href="#" class="tour-link">Open Full Tour →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-image fade-in">
+        <img src="https://images.squarespace-cdn.com/content/v1/65bbf74388684f64d2999988/660abb0a-e269-4b1e-b484-c3569596c0a4/Bobak_Studio_NEBRAU_FAMILY_HOUSE_IN_PLUGNE_1.jpg" alt="About Lachin Guluyev" loading="lazy">
+      </div>
+      <div class="about-text fade-in">
+        <span class="section-label">About</span>
+        <h2>Where Architecture<br>Becomes Image</h2>
+        <p>Lachin Guluyev is an architectural visualization specialist with a decade of experience working alongside the world's leading architects and developers. Every render is a considered composition — not merely a technical output, but a piece of visual storytelling.</p>
+        <p>Collaborating with studios across Europe, North America and the Middle East, the work bridges the gap between architectural concept and human experience, making buildings understandable before they are built.</p>
+        <p>The studio offers a full spectrum of services: photorealistic still renders, cinematic animations, real-time interactive experiences, and immersive 360° virtual tours.</p>
+        <div class="about-stats">
+          <div>
+            <p class="stat-num">10+</p>
+            <p class="stat-label">Years Experience</p>
+          </div>
+          <div>
+            <p class="stat-num">200+</p>
+            <p class="stat-label">Projects Delivered</p>
+          </div>
+          <div>
+            <p class="stat-num">30+</p>
+            <p class="stat-label">Global Clients</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="contact-intro fade-in">
+        <span class="section-label">Get in Touch</span>
+        <h2>Let's Work<br>Together</h2>
+        <p>Whether you have a project brief ready or simply want to explore possibilities, I'd love to hear from you.</p>
+        <div class="contact-links">
+          <a href="mailto:hello@lachinguluyev.com" class="contact-link-item">
+            <span class="contact-link-icon">✉</span>
+            <div class="contact-link-text">
+              <p class="contact-link-label">Email</p>
+              <p class="contact-link-value">hello@lachinguluyev.com</p>
+            </div>
+          </a>
+          <a href="https://instagram.com" target="_blank" class="contact-link-item">
+            <span class="contact-link-icon">◈</span>
+            <div class="contact-link-text">
+              <p class="contact-link-label">Instagram</p>
+              <p class="contact-link-value">@lachinguluyev</p>
+            </div>
+          </a>
+          <a href="https://linkedin.com" target="_blank" class="contact-link-item">
+            <span class="contact-link-icon">in</span>
+            <div class="contact-link-text">
+              <p class="contact-link-label">LinkedIn</p>
+              <p class="contact-link-value">Lachin Guluyev</p>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="contact-form-side fade-in">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" placeholder="Full name">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label>Project Type</label>
+          <input type="text" placeholder="Residential / Commercial / Mixed-use…">
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell me about your project…"></textarea>
+        </div>
+        <button class="submit-btn">Send Message →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-logo">Lachin Guluyev</p>
+  <p class="footer-copy">© 2025 Lachin Guluyev. All rights reserved.</p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightboxDirect()">&times;</button>
+  <button class="lightbox-nav lightbox-prev" onclick="lightboxNav(event,-1)">&#8592;</button>
+  <img class="lightbox-img" id="lightboxImg" src="" alt="">
+  <button class="lightbox-nav lightbox-next" onclick="lightboxNav(event,1)">&#8594;</button>
+  <div class="lightbox-counter" id="lightboxCounter"></div>
+</div>
+
+<script>
+  let lbImages = [];
+  let lbIndex  = 0;
+
+  function buildImageList() {
+    const activecat = document.querySelector('.works-category.active');
+    if (!activecat) return [];
+    return Array.from(activecat.querySelectorAll('.work-item img'));
+  }
+
+  function openLightbox(imgEl) {
+    lbImages = buildImageList();
+    lbIndex  = lbImages.indexOf(imgEl);
+    if (lbIndex === -1) { lbImages = [imgEl]; lbIndex = 0; }
+    showLightboxImage();
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function showLightboxImage() {
+    const img     = document.getElementById('lightboxImg');
+    const counter = document.getElementById('lightboxCounter');
+    img.style.opacity   = '0';
+    img.style.transform = 'scale(0.92)';
+    setTimeout(() => {
+      img.src = lbImages[lbIndex].src;
+      img.alt = lbImages[lbIndex].alt;
+      img.style.opacity   = '';
+      img.style.transform = '';
+    }, 120);
+    counter.textContent = (lbIndex + 1) + ' / ' + lbImages.length;
+  }
+
+  function closeLightbox(e) {
+    if (e.target === document.getElementById('lightbox')) closeLightboxDirect();
+  }
+
+  function closeLightboxDirect() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(() => { document.getElementById('lightboxImg').src = ''; }, 400);
+  }
+
+  function lightboxNav(e, dir) {
+    e.stopPropagation();
+    lbIndex = (lbIndex + dir + lbImages.length) % lbImages.length;
+    showLightboxImage();
+  }
+
+  // Attach click listeners to all work-item images
+  document.querySelectorAll('.work-item img').forEach(img => {
+    img.addEventListener('click', function(e) {
+      e.stopPropagation();
+      openLightbox(this);
+    });
+  });
+
+  // Keyboard: ESC closes, arrows navigate
+  document.addEventListener('keydown', e => {
+    const lb = document.getElementById('lightbox');
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape')      closeLightboxDirect();
+    if (e.key === 'ArrowRight') { lbIndex=(lbIndex+1)%lbImages.length; showLightboxImage(); }
+    if (e.key === 'ArrowLeft')  { lbIndex=(lbIndex-1+lbImages.length)%lbImages.length; showLightboxImage(); }
+  });
+
+  // Tab switching — also rebuilds lightbox image list context
+  function switchTab(cat, btn){
+    document.querySelectorAll('.works-category').forEach(c=>c.classList.remove('active'));
+    document.querySelectorAll('.works-tab').forEach(b=>b.classList.remove('active'));
+    document.getElementById('cat-'+cat).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function toggleMenu(){
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll',()=>{
+    let cur='';
+    sections.forEach(s=>{ if(window.scrollY >= s.offsetTop - 100) cur = s.id; });
+    navLinks.forEach(a=>{
+      a.classList.remove('active');
+      if(a.getAttribute('href')==='#'+cur) a.classList.add('active');
+    });
+  });
+
+  // Fade-in observer
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);}
+    });
+  },{threshold:0.1});
+  document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
